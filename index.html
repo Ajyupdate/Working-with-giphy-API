@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="styles/bootstrap.css">
+        <title>Giphy.com</title>
+    </head>
+    <body style="background-color: black; color: white;" >
+        <div class="container">
+            <ul class="list-inline">
+                <li class="list-inline-item text-uppercase"><img src="images/download (1).png" alt=""></li>
+                <li class="list-inline-item text-uppercase" style="font-size: 50px;">
+                    giphy
+                </li>
+                <a href="#"><li class="list-inline-item first-nav" id="reactions">Reactions</li></a>
+                <a href="#"><li class="list-inline-item first-nav" id="entertainment">Entertainment</li></a>
+                <a href="#"><li class="list-inline-item first-nav" id="sport">Sport</li></a>
+                <a href="#"><li class="list-inline-item first-nav" id="artist">Artist</li></a>
+                <a href="#"><li class="list-inline-item first-nav" id="icon">icon</li></a>
+                
+                <a href="#"><li class="list-inline-item UandC" id="u-c"><button class="btn btn-primary">Upload</button></li></a>
+                <a href="#"><li class="list-inline-item UandC" id="u-c"><button class="btn btn-primary">Create</button></li></a>
+    
+                <li class="list-inline-item logIn"><button class="btn-sm">icon</button></li>
+                <li class="list-inline-item logIn"><input type="text" placeholder="Log in"></li>
+            </ul>
+
+            <form id="search-form" class="form-group">
+                <input type="text" id="search-input" class="form-control" placeholder="Search all the Gifs and Stickers">
+                <button class="btn-primary btn-small" id="search">search</button>
+            </form>
+
+            <div class="search-output"></div>
+            <div class="container third-row" >
+                <h1 class="text-center text-uppercase ">All the <span><img src="images/download (2).jpg" alt="" height="60" width="60"></span>gifs</h1>
+            </div>
+            <div>
+                <div class="container header-flex mt-3">
+                    <div>
+                        <h4>Trending GIFs</h4>
+                    </div>
+                    <div>
+                        <ul class="pagination">
+                            <li><a href="#">SEE ALL <span class="raquo">&raquo;</span> </a></li>
+                        </ul>
+                    </div>
+                   
+                </div>
+                <div class="row" >
+                    <div class="trending-gif" id="out"></div>
+                </div>
+            </div>
+
+            <div>
+                <div class="container header-flex mt-3">
+                    <div>
+                        <h4>Artists</h4>
+                    </div>
+                    <div>
+                        <ul class="pagination">
+                            <li><a href="#">SEE ALL <span class="raquo">&raquo;</span> </a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row" >
+                    <div class="artist-gif" id="artist-output"></div>
+                    
+                </div>
+            
+            
+           
+            <script>
+               
+                let APIKEY = "PsydixbCvVRoEYsnOoJ5ntdTv1awDjxV"
+                document.addEventListener('DOMContentLoaded', init)
+                function init(){
+                    const out = document.querySelectorAll('.out')
+                    url = `https://api.giphy.com/v1/gifs/trending?api_key=${APIKEY}&limit=5&q=`
+                    fetch(url)
+                    .then(res => res.json())  
+                    .then(content =>{
+                        
+                       let gifDiv = document.querySelector('.trending-gif')
+                       
+                       for(let i = 0; i<content.data.length; i++){
+                        let img = document.createElement('img')
+                       img.src = content.data[i].images.downsized.url;
+                       img.style.width = "200px"
+                       img.style.padding = "10px"
+                       img.style.height = '200px'
+                      
+                       gifDiv.appendChild(img)
+                       }
+                       
+                     
+                    })    
+                    ur = `https://api.giphy.com/v1/gifs/trending?api_key=${APIKEY}&limit=3&offset=5`
+                    fetch(ur)
+                    .then(response => response.json())
+                    .then(data =>{
+                        console.log(data)
+                        let artistDiv = document.querySelector('.artist-gif')
+                      
+                       for(let i = 0; i<data.data.length; i++){
+                        let figure = document.createElement('figure')
+                        let img = document.createElement('img')
+                        let figcaption = document.createElement('figcaption')
+                        img.src = data.data[i].images.downsized.url;
+                        img.alt = data.data[i].title;
+                        figcaption.textContent = data.data[i].title
+                        img.style.width = "350px"
+                        img.style.padding = "10px"
+                        img.style.height = '400px'
+                        
+                       
+                        figure.appendChild(img)
+                        figure.appendChild(figcaption)
+                        artistDiv.append(figure)
+                       }
+                    })
+                    
+                    
+                }
+            </script>
+            
+
+           
+        
+     <script src="main.js"></script>     --> 
+    </body>
+    
+</html>
+
